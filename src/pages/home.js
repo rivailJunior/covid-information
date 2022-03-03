@@ -21,9 +21,9 @@ const Home = () => {
   return (
     <div>
       <h2>Home page</h2>
-      <button onClick={handleOnClick}>Click here to load page</button>
       <MapWrapper center={position} zoom={13}>
         <TileLayer
+          role="map"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url={`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${REACT_APP_MAPBOX_KEY}`}
           id="mapbox/streets-v11"

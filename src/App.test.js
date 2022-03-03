@@ -45,18 +45,41 @@ describe("Home", () => {
     }
   );
 
-  it("should render about after click on home button", () => {
-    mockWindow();
-    renderWithRouter(<Component />);
-    const homeText = screen.getByRole("heading", { name: "Home page" });
-    expect(homeText).toBeInTheDocument();
+  // it("should render about after click on home button", () => {
+  //   mockWindow();
+  //   renderWithRouter(<Component />);
+  //   const homeText = screen.getByRole("heading", { name: "Home page" });
+  //   expect(homeText).toBeInTheDocument();
 
-    const homeButton = screen.getByRole("button", {
-      name: /click here to load page/i,
+  //   const homeButton = screen.getByRole("button", {
+  //     name: /click here to load page/i,
+  //   });
+  //   fireEvent.click(homeButton);
+
+  //   expect(window.location.assign).toBeCalledWith("/about");
+  // });
+
+  it("should render map properly", () => {
+    const { container } = renderWithRouter(<Component />);
+    const map = container.querySelector(".leaflet-container");
+    expect(map).toBeInTheDocument();
+    const zoomIn = screen.getByRole("button", {
+      name: /zoom in/i,
     });
-    fireEvent.click(homeButton);
 
-    expect(window.location.assign).toBeCalledWith("/about");
+    const zoomOut = screen.getByRole("button", {
+      name: /zoom out/i,
+    });
+
+    expect(zoomIn).toBeInTheDocument();
+    expect(zoomOut).toBeInTheDocument();
+
+    expect(screen.getByRole("presentation")).toHaveProperty(
+      "src",
+      expect.stringContaining(
+        "https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/13/4093/2724?access_token="
+      )
+    );
   });
 });
 
