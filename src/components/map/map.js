@@ -7,15 +7,15 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 const { REACT_APP_MAPBOX_KEY } = process.env;
 
 const MapWrapper = styled(MapContainer)`
-  height: 360px;
+  height: 700px;
   background-color: black;
 `;
 
-const position = [51.505, -0.09];
+const position = [-15.7801, -47.9292];
 
 export default function MapContent() {
   return (
-    <MapWrapper center={position} zoom={13}>
+    <MapWrapper center={position} zoom={5}>
       <TileLayer
         role="map"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
