@@ -3,7 +3,7 @@ import L from "leaflet";
 import "leaflet.markercluster/dist/leaflet.markercluster";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
-import { useLeaflet } from "react-leaflet";
+import { useMap } from "react-leaflet";
 
 const markerClusters = L.markerClusterGroup();
 const customIcon = new L.Icon({
@@ -12,29 +12,32 @@ const customIcon = new L.Icon({
 });
 
 const MarkerCluster = ({ markers, addMarkers }) => {
-  const { map } = useLeaflet();
+  const map = useMap();
 
   useEffect(() => {
     markerClusters.clearLayers();
-    markers.forEach(({ position }) =>
+    markers.forEach(({ position, label }) =>
       L.marker(new L.LatLng(position.lat, position.lng), {
         icon: customIcon,
-      }).addTo(markerClusters)
+      })
+        .addTo(markerClusters)
+        .bindPopup(label)
     );
 
     map.addLayer(markerClusters);
   }, [markers, map]);
 
   map.on("moveend", () => {
-    const start = window.performance.now();
-
     addMarkers();
+
     const markersToAdd = [];
+
     markerClusters.clearLayers();
-    markers.forEach(({ position }) => {
+
+    markers.forEach(({ position, label }) => {
       const markerToAdd = L.marker(new L.LatLng(position.lat, position.lng), {
         icon: customIcon,
-      });
+      }).bindPopup(label);
 
       if (markerToAdd !== undefined) {
         markersToAdd.push(markerToAdd);
@@ -42,11 +45,9 @@ const MarkerCluster = ({ markers, addMarkers }) => {
     });
 
     markerClusters.addLayers(markersToAdd);
-    const end = window.performance.now();
-    console.log(`Time of adding markers and clusters: ${end - start}ms`);
   });
 
   return null;
 };
 
-export default MarkerCluster;
+export { MarkerCluster };

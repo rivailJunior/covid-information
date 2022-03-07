@@ -3,30 +3,34 @@ import React from "react";
 import styled from "styled-components/macro";
 
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { MarkerCluster } from "./markerCluster";
+import { createBrazilianMarkers } from "../../helper/brazilianStateMarkers";
 
 const { REACT_APP_MAPBOX_KEY } = process.env;
 
 const MapWrapper = styled(MapContainer)`
-  height: 700px;
+  height: 600px;
+  width: 450px;
   background-color: black;
 `;
 
-const position = [-15.7801, -47.9292];
-
+const position = [-8.77, -70.55];
+const mapStyleId = "mapbox/outdoors-v11";
+const mapUrl = `https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${REACT_APP_MAPBOX_KEY}`;
+const attribution =
+  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 export default function MapContent() {
+  const markers = createBrazilianMarkers();
+
   return (
-    <MapWrapper center={position} zoom={5}>
+    <MapWrapper center={position} zoom={3}>
       <TileLayer
         role="map"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url={`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${REACT_APP_MAPBOX_KEY}`}
-        id="mapbox/streets-v11"
+        attribution={attribution}
+        url={mapUrl}
+        id={mapStyleId}
       />
-      <Marker position={position}>
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
-        </Popup>
-      </Marker>
+      <MarkerCluster markers={markers} addMarkers={createBrazilianMarkers} />
     </MapWrapper>
   );
 }
