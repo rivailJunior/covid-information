@@ -6,8 +6,6 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { MarkerCluster } from "./markerCluster";
 import { createBrazilianMarkers } from "../../helper/brazilianStateMarkers";
 
-const { REACT_APP_MAPBOX_KEY } = process.env;
-
 const MapWrapper = styled(MapContainer)`
   height: 600px;
   width: 500px;
