@@ -1,7 +1,9 @@
+/* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable no-undef */
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
-import App from "./routes/routes-pages";
 import { BrowserRouter } from "react-router-dom";
-import { mockWindow } from "./helper/rtl";
+import App from "./routes/routes-pages";
+// import { mockWindow } from "./helper/rtl";
 import HeaderAppBar from "./components/header/header";
 
 afterEach(cleanup);
